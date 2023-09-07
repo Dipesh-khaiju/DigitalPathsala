@@ -25,7 +25,6 @@ app.get("/createblog",(req,res)=>{
 
 app.post("/createblog",async(req,res)=>{
     // console.log(req.body);
-    res.send("Successfully submitted  blog");
     try{
         const registerBlog = new Blog({
             title:req.body.title,
@@ -40,6 +39,7 @@ app.post("/createblog",async(req,res)=>{
     catch(err){
         console.log(err);
     }
+    res.redirect("/")
 })
 
 
