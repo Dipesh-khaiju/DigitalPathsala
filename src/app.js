@@ -11,9 +11,11 @@ app.use(express.urlencoded({extended:true}));
 
 const port = process.env.port || 5000;
 
-app.get("/",(req,res)=>{
-    // res.send("k xa vailog");
-    res.render("blogs")
+app.get("/",async(req,res)=>{
+    // blogs collection bata sabai data deeu vaneko
+    const allblog= await blogs.find();
+    console.log(allblog);
+    res.render("blogs");
  
 })
 app.get("/createblog",(req,res)=>{
