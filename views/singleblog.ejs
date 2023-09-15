@@ -61,20 +61,18 @@
         <a href="Home">My Blog Post</a>
     </header>
     <div class="container">
-       <% blog.forEach((blog)=>{ %>
         <div class="author-info">
-            <%- blog.title %>
-        </div>  
+          <%= blog.title %>
+        </div>
         <div class="author-info">
-            <%- blog.subtitle %>
+          <%= blog.subtitle %>
         </div>
         <div class="post-content">
-            <p><%- blog.description %></p>
-
+          <p><%= blog.description %></p>
         </div>
- <%   }) %>
- <button><a href="/delete %>">Delete</a></button>
-    </div>
+        <button><a href="/delete">Delete</a></button>
+      </div>
+      
     <footer class="footer">
         &copy; 2023 My Blog
        
