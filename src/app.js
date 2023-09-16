@@ -50,10 +50,10 @@ app.post("/createblog",async(req,res)=>{
 
 // single blog page ko lagi
 
-app.get("/single",async(req,res)=>{
+app.get("/single/:id",async(req,res)=>{
     const id = req.params.id
-    const Blog =  await blog.find({
-     id:id
+    const Blog =  await blog.findOne({
+     _id:id
 })
     
     res.render("singleblog.ejs",{blog:Blog});
@@ -75,9 +75,9 @@ app.get("/single",async(req,res)=>{
 
 // Delete page
 
-app.get("/delete",async(req,res)=>{
+app.get("/delete/:id",async(req,res)=>{
     const id = req.params.id;
-    await blog.deleteOne({id:id})
+    await blog.deleteOne({_id:id})
 
    res.redirect("/")
 })
