@@ -58,7 +58,7 @@
 </head>
 <body>
     <header>
-        <a href="Home">My Blog Post</a>
+        <a href="/Home">My Blog Post</a>
     </header>
     <div class="container">
         <div class="author-info">
@@ -69,10 +69,11 @@
         </div>
         <div class="post-content">
             <p><%- blog.description %></p>
-
         </div>
  
  <button><a href="/delete/<%- blog._id %>">Delete</a></button>
+ 
+ <button><a href="/updateBlog/<%- blog._id %>">Edit</a></button>
     </div>
     <footer class="footer">
         &copy; 2023 My Blog

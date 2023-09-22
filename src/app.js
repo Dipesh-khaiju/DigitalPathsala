@@ -20,13 +20,16 @@ app.get("/",async(req,res)=>{
     res.render("blogs",{blogs:allblog});
   
 })
+
+app.get("/Home",(req,res)=>{
+    res.redirect("/")
+})
+
 app.get("/createblog",(req,res)=>{
     res.render("createblog");
 
 })
-app.get("/Home",(req,res)=>{
-    res.redirect("/")
-})
+
 // Creating Blog
 
 app.post("/createblog",async(req,res)=>{
@@ -48,7 +51,7 @@ app.post("/createblog",async(req,res)=>{
     res.redirect("/")
 })
 
-// single blog page ko lagi
+// single blog page show garna ko lagix
 
 app.get("/single/:id",async(req,res)=>{
     const id = req.params.id
@@ -59,19 +62,34 @@ app.get("/single/:id",async(req,res)=>{
     res.render("singleblog.ejs",{blog:Blog});
 });
 
+// page update garna lai
 
-// Stackoverflow bata copied
-// app.get("/single", function(req, res){
+app.get("/updateBlog/:id",async(req,res)=>{
+    const id = req.params.id;
+    const editBlog = await blog.findOne({_id:id})
+ 
+    res.render("editBlog",{blog:editBlog});
+});
 
-//     blog.findById(req.params.id, function(err, foundBlog){
-//         if(err){
-//             res.redirect("/");
-//         } else {
-//             res.render("singleblog.ejs", {blog: foundBlog});
-//         }
-//     });
-//  });
+app.patch("/editBlog/:id",async(req,res)=>{
+    
+    // const id = req.params.id;
 
+    // await blog.updateOne(req.body,{_id:id})
+
+    // const title = req.body.title;
+    // const subtitle = req.body.subtitle;
+    // const description = req.body.description;
+
+    // await blog.updateOne({
+    // title:title,
+    // subtitle:subtitle,
+    // description:description
+    // },{_id:id})
+
+    // res.redirect("/single/" + id)
+
+})
 
 // Delete page
 
