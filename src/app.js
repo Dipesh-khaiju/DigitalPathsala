@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const port = process.env.port || 4000;
+const port = process.env.port || 3000;
 
 app.get("/", async (req, res) => {
   // blogs collection bata sabai data deeu vaneko
@@ -19,12 +19,15 @@ app.get("/", async (req, res) => {
   //Blog vanne key/name ma allblogs/data pass gareko ejs file lai
   res.render("blogs", { blogs: allblog });
 });
-app.get("/createblog", (req, res) => {
-  res.render("createblog");
-});
+
 app.get("/Home", (req, res) => {
   res.redirect("/");
 });
+
+app.get("/createblog", (req, res) => {
+  res.render("createblog");
+});
+
 // Creating Blog
 
 app.post("/createblog", async (req, res) => {
@@ -43,7 +46,7 @@ app.post("/createblog", async (req, res) => {
   res.redirect("/");
 });
 
-// single blog page ko lagi
+// single blog page show garna ko lagix
 
 app.get("/single/:id", async (req, res) => {
   const id = req.params.id;
@@ -54,23 +57,46 @@ app.get("/single/:id", async (req, res) => {
   res.render("singleblog.ejs", { blog: Blog });
 });
 
-// Stackoverflow bata copied
-// app.get("/single", function(req, res){
+// page update garna lai
 
-//     blog.findById(req.params.id, function(err, foundBlog){
-//         if(err){
-//             res.redirect("/");
-//         } else {
-//             res.render("singleblog.ejs", {blog: foundBlog});
-//         }
-//     });
-//  });
+app.get("/updateBlog/:id", async (req, res) => {
+  const id = req.params.id;
+  const editBlog = await blog.findOne({ _id: id });
+
+  res.render("editBlog", { blog: editBlog });
+});
+
+app.post("/editBlog/:id", async (req, res) => {
+  const { id } = req.params;
+  const data = await blog.findOne({ _id: id });
+  if (!data) {
+    throw new Error("Blog Not Found");
+  }
+
+  const blogData = await blog.findOneAndUpdate({ _id: id }, req.body, {
+    new: true,
+  });
+
+  res.render("singleblog.ejs", { blog: blogData });
+
+  // const id = req.params.id;
+  // await blog.updateOne(req.body,{_id:id})
+  // const title = req.body.title;
+  // const subtitle = req.body.subtitle;
+  // const description = req.body.description;
+  // await blog.updateOne({
+  // title:title,
+  // subtitle:subtitle,
+  // description:description
+  // },{_id:id})
+  // res.redirect("/single/" + id)
+});
 
 // Delete page
 
-app.get("/delete", async (req, res) => {
+app.get("/delete/:id", async (req, res) => {
   const id = req.params.id;
-  await blog.deleteOne({ id: id });
+  await blog.deleteOne({ _id: id });
 
   res.redirect("/");
 });

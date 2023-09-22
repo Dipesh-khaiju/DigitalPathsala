@@ -71,18 +71,21 @@
       <a href="createblog">Add Blog</a>
     </nav>
     <div class="container">
-      <% if (blogs.length === 0) { %>
-      <h1>No Blogs</h1>
-      <% } else { %>
-      <% blogs.forEach((blog) => { %>
-      <div class="card">
-        <div class="card-title"><%- blog.title %></div>
-        <div class="card-subtitle"><%- blog.subtitle %></div>
-        <div class="card-description"><%- blog.description %></div>
-        <a href="/single/<%= blog._id %>">Read More..</a>
-      </div>
-      <% }) %>
-      <% } %>
+        
+      <%  if(blogs.length == 0){ %>
+        <h1>No Blogs</h1>
+
+      <%  }else{ %>
+
+        <% blogs.forEach((blog)=>{ %>
+        <div class="card">
+            <div class="card-title" > <%- blog.title %></div>
+            <div class="card-subtitle"><%- blog.subtitle %></div>
+            <div class="card-description"><%- blog.description %></div>
+            <a href="/single/<%- blog._id %>">Read More..</a>
+        </div> 
+    <%    })  %>  
+    <% } %>
     </div>
   </body>
   
