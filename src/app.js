@@ -1,9 +1,18 @@
 const express =require('express');
 const app = express();
 const ejs = require('ejs');
+const path =require('path');
 
 require("./db/conn");
 const blog = require("./db/schemadef");
+
+//For external css,js etc
+app.use(express.static(path.join(__dirname,"../public/")));
+
+// for using partials
+// <%-include('partials/filenmae')%>
+
+
 
 app.set('view engine','ejs');
 app.use(express.json());
@@ -71,23 +80,28 @@ app.get("/updateBlog/:id",async(req,res)=>{
     res.render("editBlog",{blog:editBlog});
 });
 
-app.patch("/editBlog/:id",async(req,res)=>{
-    
-    // const id = req.params.id;
+app.post("/editBlog/:id",async(req,res)=>{
+        const {id}=req.params;
+        const data = await blog.findOne({_id:id});
+        if(!data){
+            throw new error("BLog not found")
+        }
 
-    // await blog.updateOne(req.body,{_id:id})
+        const blogData = await blog.findOneAndUpdate({_id:id},req.body,{new:true});
+        // res.render("singleblog.ejs",{blog:blogData});
 
+
+    //error aayo esma
     // const title = req.body.title;
     // const subtitle = req.body.subtitle;
     // const description = req.body.description;
-
     // await blog.updateOne({
     // title:title,
     // subtitle:subtitle,
     // description:description
     // },{_id:id})
 
-    // res.redirect("/single/" + id)
+    res.redirect("/single/" + id)
 
 })
 
