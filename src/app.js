@@ -3,6 +3,8 @@ const app = express();
 const ejs = require('ejs');
 const path =require('path');
 
+const port = process.env.port || 5000;
+
 require("./db/conn");
 const blog = require("./db/schemadef");
 
@@ -18,7 +20,7 @@ app.set('view engine','ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-const port = process.env.port || 5000;
+
 
 app.get("/",async(req,res)=>{
     // blogs collection bata sabai data deeu vaneko
